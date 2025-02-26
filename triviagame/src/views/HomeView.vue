@@ -58,12 +58,13 @@ export default {
   background-color: #f8f8f8;
 }
 .title {
-  font-size: 3rem;
+  font-size: 7rem;
   font-family: fantasy;
   background-color: #f0645a;
   padding: 20px 40px;
   border-radius: 20px;
   color: black;
+  margin: 100px;
 }
 .settings {
   margin-top: 20px;
