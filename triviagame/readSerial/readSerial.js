@@ -17,7 +17,7 @@ async function readSerial() {
 
 	try {
 		port.on('readable', () => {
-			console.log('Data:', port.read());
+			const data = port.read();
 		});
 	} catch (error) {
 		console.log('failed to connect');
