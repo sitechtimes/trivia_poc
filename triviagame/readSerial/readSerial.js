@@ -1,6 +1,6 @@
 import { SerialPort } from 'serialport';
 
-async function readSerial() {
+export default async function readSerial() {
 	let serialPort;
 	await SerialPort.list().then(
 		(ports) =>
