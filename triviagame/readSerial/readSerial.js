@@ -1,27 +1,29 @@
-import { SerialPort } from 'serialport';
+import { SerialPort, ReadlineParser } from 'serialport';
 
-export default async function readSerial() {
-	let serialPort;
-	await SerialPort.list().then(
-		(ports) =>
-			ports.forEach((port) => {
-				if (port.manufacturer === 'Silicon Labs') serialPort = port;
-			}),
-		(err) => console.error(err)
-	);
-
+// Define the COM port and baud rate
+export default readSerial();
+function openSerial() {
 	const port = new SerialPort({
-		path: serialPort.path,
-		baudRate: 115200,
+		path: 'COM5', // Change to your actual port
+		baudRate: 115200, // Adjust baud rate as needed
 	});
 
-	try {
-		port.on('readable', () => {
-			const data = port.read();
-		});
-	} catch (error) {
-		console.log('failed to connect');
-	}
-}
+	// Create a parser to read incoming data line by line
+	const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
 
-readSerial();
+	return [port, parser];
+	// Open the port
+	// port.on('open', () => {
+	// 	console.log('Serial port COM5 opened.');
+	// });
+
+	// // Read incoming data
+	// parser.on('data', (data) => {
+	// 	console.log('Received:', data);
+	// });
+
+	// // Handle errors
+	// port.on('error', (err) => {
+	// 	console.error('Serial Port Error:', err.message);
+	// });
+}
