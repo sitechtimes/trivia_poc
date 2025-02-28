@@ -1,4 +1,8 @@
 <template>
+  <head><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Henny+Penny&family=Sankofa+Display&display=swap" rel="stylesheet">
+</head>
   <div class="home-container">
     <div class="top_section">
     <div class="title">TRIVIA SMASH</div>
@@ -106,7 +110,7 @@ export default {
   background-color: #a7f3a7;
   padding: 20px;
   border-radius: 10px;
-  width:120%;
+  width:130%;
   font-size: 130%;
   justify-content:center;
   align-items: center;
@@ -116,6 +120,8 @@ export default {
 }
 input[type="number"] {
   width: 50px;
+  padding-left:10px;
+  padding-top: 7px;
 }
 .toggle input {
   margin-left: 10px;
