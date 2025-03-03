@@ -11,7 +11,7 @@ function openSerial() {
 	// Create a parser to read incoming data line by line
 	const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
 
-	return [port, parser];
+	return { port, parser };
 	// Open the port
 	// port.on('open', () => {
 	// 	console.log('Serial port COM5 opened.');
