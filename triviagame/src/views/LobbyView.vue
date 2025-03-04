@@ -9,15 +9,24 @@
         <button @click="addPlayer" :disabled="players.length >= 5" class="add_player_btn"><img src="../assets/plus_symbol.png"></button>
       </div>
       <div class="players">
-        <div v-for="(player, index) in players" :key="player.id" :class="['player-card', player.status]">
+        <div 
+        v-for="(player, index) in players" 
+        :key="player.id" 
+        :class="['player-card', player.status]" 
+        :style="{ backgroundColor: playerColors[index % playerColors.length] }"
+      >
+          <div class="card_interior_overall">
+          <button v-if="players.length > 1" @click="removePlayer(index)" class="x_button"><img src="../assets/x_symbol.png"></button>
+        <div class="card_interior">
           <div class="player-header">
             <span>{{ player.name }}</span>
-            <button v-if="players.length > 1" @click="removePlayer(index)">&#x2716;</button>
           </div>
           <div class="player-status">
             <span v-if="player.status === 'connected'">✔ Connected</span>
-            <span v-else>✖ Disconnected</span>
+            <span v-else><span class="material-symbols-outlined">disabled_by_default</span> Disconnected</span>
           </div>
+        </div>
+      </div>
         </div>
       </div>
       <button class="start-btn" @click="startGame" :disabled="players.some(p => p.status === 'disconnected')">START</button>
@@ -29,8 +38,10 @@
   
   export default {
     setup() {
+      const playerColors = ['#FF8A65', '#DCE775','#A8E6CF', '#4FC3F7', '#BA68C8']; // Unique colors for each player
+
       const players = ref([
-        { id: 1, name: 'Player One', status: 'disconnected', mac: null }
+        { id: 1, name: 'Player 1', status: 'disconnected', mac: null }
       ]);
       
       const storedMacs = ["MAC1", "MAC2", "MAC3", "MAC4", "MAC5"]; // Replace with real MACs
@@ -65,13 +76,15 @@
         addPlayer,
         removePlayer,
         connectPlayer,
-        startGame
+        startGame,
+        playerColors
       };
     }
   };
   </script>
   
   <style scoped>
+
   #app{
     display: flex;
     justify-content: center;
@@ -95,7 +108,7 @@
     padding: 10px;
     border-radius: 10px;
     width: 100%;
-    height: 120px;
+    height: 140px;
   }
   .connect_players_h2{
     background-color: #b993ff;
@@ -109,7 +122,7 @@
     font-family: "Henny Penny", serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 50px;
+    font-size: 60px;
     line-height: 100%;
     margin-right: 30px;
   }
@@ -118,16 +131,64 @@
     justify-content: center;
     gap: 15px;
     margin-top: 20px;
+    font-family: "Henny Penny", serif;
+    font-weight: 400;
+    font-style: normal;
   }
   .player-card {
-    width: 250px;
+    width: 300px;
     height: 400px;
     padding: 15px;
     margin: 20px;
     margin-bottom: 80px;
     margin-top: 80px;
     border-radius: 20px;
-    text-align: center;
+    /* text-align: center; */
+  }
+  .card_interior_overall{
+    display:flex;
+    flex-direction: column;
+    align-items: end;
+  }
+  .x_button{
+    width: 50px;
+    height: 50px;
+    background-color: #ffffff;
+    border-radius: 50px;
+  }
+  .card_interior{
+    display:flex;
+    justify-content:center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  .material-symbols-outlined{
+    font-size: 100px;
+  }
+  .player-header{
+    background-color: #fff;
+    margin:10px;
+    height: 50px;
+    width: 60%;
+    border-radius: 10px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+  }
+  .player-status{
+    background-color:#fff;
+    margin: 50px;
+    margin-top:30px;
+    padding: 20px;
+    height: 220px;
+    width: 75%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
   }
   .connected {
     background: lightgreen;
@@ -139,7 +200,13 @@
     margin-top: 20px;
     padding: 10px;
     background: peachpuff;
-    border-radius: 5px;
+    border-radius: 20px;
+    height: 90px;
+    width: 20%;
+    font-family: "Henny Penny", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 60px;
   }
   .add_player_btn{
     margin:20px;
