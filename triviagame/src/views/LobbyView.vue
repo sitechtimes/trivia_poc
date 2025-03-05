@@ -6,7 +6,7 @@
     <div class="container">
       <div class="header">
         <h2 class="connect_players_h2">Connect Players</h2>
-        <button @click="addPlayer" :disabled="players.length >= 5" class="add_player_btn"><img src="../assets/plus_symbol.png"></button>
+        <button @click="addPlayer" :disabled="players.length >= 5" class="add_player_btn"><span class="material-symbols-outlined" id="add_player">add</span></button>
       </div>
       <div class="players">
         <div 
@@ -16,14 +16,16 @@
         :style="{ backgroundColor: playerColors[index % playerColors.length] }"
       >
           <div class="card_interior_overall">
-          <button v-if="players.length > 1" @click="removePlayer(index)" class="x_button"><img src="../assets/x_symbol.png"></button>
+          <button v-if="players.length > 1" @click="removePlayer(index)" class="x_button" id="delete_player"><span class="material-symbols-outlined">
+cancel
+</span></button>
         <div class="card_interior">
           <div class="player-header">
             <span>{{ player.name }}</span>
           </div>
           <div class="player-status">
-            <span v-if="player.status === 'connected'">✔ Connected</span>
-            <span v-else><span class="material-symbols-outlined">disabled_by_default</span> Disconnected</span>
+            <div v-if="player.status === 'connected'" class="status"><span class="material-symbols-outlined" id="connected">check_circle</span> <span>Connected</span></div>
+            <div v-else class="status"><span class="material-symbols-outlined" id="disconnected">disabled_by_default</span> <span>Disconnected</span></div>
           </div>
         </div>
       </div>
@@ -137,7 +139,7 @@
   }
   .player-card {
     width: 300px;
-    height: 400px;
+    height: 420px;
     padding: 15px;
     margin: 20px;
     margin-bottom: 80px;
@@ -150,12 +152,6 @@
     flex-direction: column;
     align-items: end;
   }
-  .x_button{
-    width: 50px;
-    height: 50px;
-    background-color: #ffffff;
-    border-radius: 50px;
-  }
   .card_interior{
     display:flex;
     justify-content:center;
@@ -164,8 +160,12 @@
     width: 100%;
     height: 100%;
   }
-  .material-symbols-outlined{
+  #disconnected, #connected{
     font-size: 100px;
+  }
+  #delete_player{
+    transform: scale(2);
+    margin: 5px;
   }
   .player-header{
     background-color: #fff;
@@ -177,6 +177,7 @@
     justify-content: center;
     align-items: center;
     font-size: 22px;
+    margin-top: 0px;
   }
   .player-status{
     background-color:#fff;
@@ -189,6 +190,13 @@
     display: flex;
     justify-content: center;
     font-size: 25px;
+    align-items: center;
+  }
+  .status{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
   .connected {
     background: lightgreen;
@@ -220,6 +228,9 @@
     display:flex;
     justify-content: center;
     align-items: center;
+  }
+  #add_player{
+    font-size: 50px;
   }
   </style>
   
