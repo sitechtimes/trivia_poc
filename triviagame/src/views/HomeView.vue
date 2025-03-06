@@ -35,15 +35,17 @@
   </div>
 </div>
     <div class="buttons">
-      <button class="blue-button"></button>
-      <button class="yellow-button"></button>
-      <button class="pink-button"></button>
-      <button class="orange-button"></button>
+      <button class="blue-button" @click="goLobby()"></button>
+      <button class="yellow-button" @click="goLobby()"></button>
+      <button class="pink-button" @click="goLobby()"></button>
+      <button class="orange-button" @click="goLobby()"></button>
     </div>
   </div>
 </template>
 
 <script>
+import router from '@/router';
+
 export default {
   data() {
     return {
@@ -59,6 +61,15 @@ export default {
         this.multipleChoice = true;
       }
     },
+  },
+  setup() {
+    const goLobby = () => {
+      router.push('/lobby');
+    };
+
+    return {
+      goLobby, // Make sure goLobby is returned so it can be used in the template
+    };
   },
 };
 </script>

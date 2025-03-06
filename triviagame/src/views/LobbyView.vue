@@ -5,6 +5,7 @@
 </head>
     <div class="container">
       <div class="header">
+        <button class="back_to_home" @click="toHome()"><span id="back" class="material-symbols-outlined">arrow_back_ios</span></button>
         <h2 class="connect_players_h2">Connect Players</h2>
         <button @click="addPlayer" :disabled="players.length >= 5" class="add_player_btn"><span class="material-symbols-outlined" id="add_player">add</span></button>
       </div>
@@ -16,9 +17,7 @@
         :style="{ backgroundColor: playerColors[index % playerColors.length] }"
       >
           <div class="card_interior_overall">
-          <button v-if="players.length > 1" @click="removePlayer(index)" class="x_button" id="delete_player"><span class="material-symbols-outlined">
-cancel
-</span></button>
+          <button v-if="players.length > 1" @click="removePlayer(index)" class="x_button" id="delete_player"><span class="material-symbols-outlined">cancel</span></button>
         <div class="card_interior">
           <div class="player-header">
             <span>{{ player.name }}</span>
@@ -36,7 +35,8 @@ cancel
   </template>
   
   <script>
-  import { ref } from 'vue';
+  import router from '@/router';
+import { ref } from 'vue';
   
   export default {
     setup() {
@@ -47,14 +47,24 @@ cancel
       ]);
       
       const storedMacs = ["MAC1", "MAC2", "MAC3", "MAC4", "MAC5"]; // Replace with real MACs
-      
+
       const addPlayer = () => {
         if (players.value.length < 5) {
-          const playerId = players.value.length + 1;
-          players.value.push({ id: playerId, name: `Player ${playerId}`, status: 'disconnected', mac: null });
+          // Get the list of all possible player IDs
+          const allIds = [1, 2, 3, 4, 5];
+          
+          // Get the current player IDs in the array
+          const existingIds = players.value.map(player => player.id);
+          
+          // Find the first missing ID by filtering out the existing ones
+          const missingId = allIds.find(id => !existingIds.includes(id));
+          
+          // If there is a missing ID, add the new player with that ID
+          if (missingId) {
+            players.value.push({ id: missingId, name: `Player ${missingId}`, status: 'disconnected', mac: null });
+          }
         }
       };
-      
       const removePlayer = (index) => {
         if (players.value.length > 1) {
           players.value.splice(index, 1);
@@ -73,13 +83,17 @@ cancel
         alert('Game Started!');
       };
       
+      const toHome = () => {
+        router.push('/');
+      }
       return {
         players,
         addPlayer,
         removePlayer,
         connectPlayer,
         startGame,
-        playerColors
+        playerColors,
+        toHome
       };
     }
   };
@@ -111,6 +125,19 @@ cancel
     border-radius: 10px;
     width: 100%;
     height: 140px;
+  }
+  .back_to_home{
+    margin:20px;
+    padding: 5px;
+    padding-right:0px;
+    width: 50px;
+    margin-right:50px;
+    transform: scale(2);
+    background-color: rgb(177, 228, 177);
+    border-radius: 20px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
   }
   .connect_players_h2{
     background-color: #b993ff;
